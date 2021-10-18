@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增组织架构')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-organization-add">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">机构名称：</label>
+                <div class="col-sm-8">
+                    <textarea name="oName" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">编码：</label>
+                <div class="col-sm-8">
+                    <input name="code" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否已删除：</label>
+                <div class="col-sm-8">
+                    <input name="isInactive" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">省份：</label>
+                <div class="col-sm-8">
+                    <input name="province" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">城市：</label>
+                <div class="col-sm-8">
+                    <input name="city" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">区/县：</label>
+                <div class="col-sm-8">
+                    <input name="district" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">机构简称：</label>
+                <div class="col-sm-8">
+                    <textarea name="abbreviation" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">医疗机构代码：</label>
+                <div class="col-sm-8">
+                    <input name="institutionCode" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">公司ID：</label>
+                <div class="col-sm-8">
+                    <input name="tenantId" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">排序：</label>
+                <div class="col-sm-8">
+                    <input name="sort" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">领健ID：</label>
+                <div class="col-sm-8">
+                    <input name="lcId" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "gw/organization"
+        $("#form-organization-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-organization-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

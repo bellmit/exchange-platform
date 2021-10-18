@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增收费小类')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-ItemCategory-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">名称：</label>
+                <div class="col-sm-8">
+                    <input name="icName" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">诊所编号：</label>
+                <div class="col-sm-8">
+                    <input name="officeId" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">所属大类ID：</label>
+                <div class="col-sm-8">
+                    <input name="scId" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">所属大类名称：</label>
+                <div class="col-sm-8">
+                    <input name="scName" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">状态：</label>
+                <div class="col-sm-8">
+                    <div class="radio-box">
+                        <input type="radio" name="status" value="">
+                        <label th:for="status" th:text="未知"></label>
+                    </div>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">排序：</label>
+                <div class="col-sm-8">
+                    <input name="sort" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">领健ID：</label>
+                <div class="col-sm-8">
+                    <input name="lcId" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "gw/ItemCategory"
+        $("#form-ItemCategory-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-ItemCategory-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

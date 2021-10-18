@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--360浏览器优先以webkit内核解析-->
+    <title>集成平台介绍</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/style.min.css" th:href="@{/css/style.min.css}" rel="stylesheet"/>
+</head>
+
+<body class="gray-bg">
+    <div class="row border-bottom white-bg dashboard-header">
+		<div class="mystrong">SINCE 2012</div>
+		<div class="mytit">上海美奥医疗管理集团有限公司</div>
+		<div class="mysubtitle">SHANGHAI MYOUR MEDICAL MANAGEMENT GROUP CO.LTD</div>
+
+		<div class="mycontent">
+			<p>
+				创办于2012年，是一家以口腔医疗投资、管理运营为主导产业的投资管理型集团公司。目前，公司在全国范围拥有员工3600余名，其中医护人员1200余名。
+				自创办以来，公司品牌连锁规模不断扩张，先后在上海、深圳、苏州、南京、合肥、杭州、天津、长沙、常德、昆明、重庆、无锡、徐州、南通、常州、郑州、济南、西安、乌鲁木齐等城市建成近40家口腔医疗机构。
+				各家分支机构统一管理模式、共享品牌资源、形成核心竞争力，以独特的经营理念、过硬的技术基础、温馨的诊疗环境和人性化的服务，取得了良好的经营业绩和品牌声誉。
+			</p>
+			<p>
+				美奥口腔作为口腔医疗连锁机构，全力推进专业化、连锁化、国际化的品牌战略；始终坚持SSCC的经营模式，
+				为中国的口腔行业树立典范；践行一切以顾客为中心的服务理念，为顾客提供品质、贴心、细心、温馨的就诊体验。
+			</p>
+			<p>
+				展望未来，“敢为天下先”的美奥人将以优秀的品牌形象，富有竞争力的企业文化，
+				实现医疗品质领先、临床技术领先、科研领先、经营模式领先、人才领先、品牌领先、管理领先的目标，最终实现美奥价值，
+				达到社会、员工、顾客三方的共赢。
+			</p>
+		</div>
+		<img alt="[ 金蝶 ]" src="/img/about.jpg" style="width: 100%"  th:src="@{/img/about.jpg}">
+    </div>
+
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+	<style type="text/css">
+		.mystrong {
+			text-transform: uppercase;
+			font-size: 72px;
+			/* color: #f5f4f5; */
+			font-weight: normal;
+			display: block;
+			line-height: 75px;
+			padding-top: 10px;
+		}
+
+		.mytit {
+			font-size: 26px;
+			color: #3e3a39;
+			line-height: 32px;
+		}
+		.mysubtitle {
+			display: block;
+			color: #a7a7a7;
+			font-size: 16px;
+			text-transform: uppercase;
+			margin-bottom: 10px;
+			line-height: 18px;
+			font-weight: 100;
+		}
+
+		.mycontent{
+			color: #41443D;
+			-webkit-text-size-adjust: 100%;
+			font: 12px/1.5 "Microsoft Yahei", "微软雅黑", sans-serif;
+		}
+
+	</style>
+
+    <script type="text/javascript">
+	    $('#pay-qrcode').click(function(){
+	        var html=$(this).html();
+	        parent.layer.open({
+	            title: false,
+	            type: 1,
+	            closeBtn:false,
+	            shadeClose:true,
+	            area: ['600px', '360px'],
+	            content: html
+	        });
+	    });
+    </script>
+</body>
+</html>

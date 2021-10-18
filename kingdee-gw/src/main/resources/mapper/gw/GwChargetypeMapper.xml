@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kingdee.gw.mapper.GwChargetypeMapper">
+    
+    <resultMap type="GwChargetype" id="GwChargetypeResult">
+        <result property="ctId"    column="ct_id"    />
+        <result property="ctName"    column="ct_name"    />
+        <result property="code"    column="code"    />
+        <result property="officeId"    column="office_id"    />
+        <result property="notes"    column="notes"    />
+        <result property="itemType"    column="item_type"    />
+        <result property="status"    column="status"    />
+        <result property="sort"    column="sort"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="lcId"    column="lc_id"    />
+    </resultMap>
+
+    <sql id="selectGwChargetypeVo">
+        select ct_id, ct_name, code, office_id, notes, item_type, status, sort, create_by, create_time, update_by, update_time, lc_id from gw_chargetype
+    </sql>
+
+    <select id="selectGwChargetypeList" parameterType="GwChargetype" resultMap="GwChargetypeResult">
+        <include refid="selectGwChargetypeVo"/>
+        <where>  
+            <if test="ctName != null  and ctName != ''"> and ct_name like concat('%', #{ctName}, '%')</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="officeId != null  and officeId != ''"> and office_id = #{officeId}</if>
+            <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
+            <if test="itemType != null  and itemType != ''"> and item_type = #{itemType}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="lcId != null  and lcId != ''"> and lc_id = #{lcId}</if>
+        </where>
+    </select>
+    
+    <select id="selectGwChargetypeByCtId" parameterType="Long" resultMap="GwChargetypeResult">
+        <include refid="selectGwChargetypeVo"/>
+        where ct_id = #{ctId}
+    </select>
+        
+    <insert id="insertGwChargetype" parameterType="GwChargetype" useGeneratedKeys="true" keyProperty="ctId">
+        insert into gw_chargetype
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ctName != null">ct_name,</if>
+            <if test="code != null">code,</if>
+            <if test="officeId != null">office_id,</if>
+            <if test="notes != null">notes,</if>
+            <if test="itemType != null">item_type,</if>
+            <if test="status != null">status,</if>
+            <if test="sort != null">sort,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="lcId != null">lc_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ctName != null">#{ctName},</if>
+            <if test="code != null">#{code},</if>
+            <if test="officeId != null">#{officeId},</if>
+            <if test="notes != null">#{notes},</if>
+            <if test="itemType != null">#{itemType},</if>
+            <if test="status != null">#{status},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="lcId != null">#{lcId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGwChargetype" parameterType="GwChargetype">
+        update gw_chargetype
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ctName != null">ct_name = #{ctName},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="officeId != null">office_id = #{officeId},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="itemType != null">item_type = #{itemType},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="lcId != null">lc_id = #{lcId},</if>
+        </trim>
+        where ct_id = #{ctId}
+    </update>
+
+    <delete id="deleteGwChargetypeByCtId" parameterType="Long">
+        delete from gw_chargetype where ct_id = #{ctId}
+    </delete>
+
+    <delete id="deleteGwChargetypeByCtIds" parameterType="String">
+        delete from gw_chargetype where ct_id in 
+        <foreach item="ctId" collection="array" open="(" separator="," close=")">
+            #{ctId}
+        </foreach>
+    </delete>
+
+</mapper>

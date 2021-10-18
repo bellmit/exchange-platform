@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kingdee.gw.mapper.GwOrganizationMapper">
+    
+    <resultMap type="GwOrganization" id="GwOrganizationResult">
+        <result property="oId"    column="o_id"    />
+        <result property="oName"    column="o_name"    />
+        <result property="code"    column="code"    />
+        <result property="isInactive"    column="is_inactive"    />
+        <result property="province"    column="province"    />
+        <result property="city"    column="city"    />
+        <result property="district"    column="district"    />
+        <result property="abbreviation"    column="abbreviation"    />
+        <result property="institutionCode"    column="institution_code"    />
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="sort"    column="sort"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="lcId"    column="lc_id"    />
+    </resultMap>
+
+    <sql id="selectGwOrganizationVo">
+        select o_id, o_name, code, is_inactive, province, city, district, abbreviation, institution_code, tenant_id, sort, create_by, create_time, update_by, update_time, lc_id from gw_organization
+    </sql>
+
+    <select id="selectGwOrganizationList" parameterType="GwOrganization" resultMap="GwOrganizationResult">
+        <include refid="selectGwOrganizationVo"/>
+        <where>  
+            <if test="oName != null  and oName != ''"> and o_name like concat('%', #{oName}, '%')</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="isInactive != null  and isInactive != ''"> and is_inactive = #{isInactive}</if>
+            <if test="province != null  and province != ''"> and province = #{province}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="district != null  and district != ''"> and district = #{district}</if>
+            <if test="abbreviation != null  and abbreviation != ''"> and abbreviation = #{abbreviation}</if>
+            <if test="institutionCode != null  and institutionCode != ''"> and institution_code = #{institutionCode}</if>
+            <if test="tenantId != null  and tenantId != ''"> and tenant_id = #{tenantId}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="lcId != null  and lcId != ''"> and lc_id = #{lcId}</if>
+        </where>
+    </select>
+    
+    <select id="selectGwOrganizationByOId" parameterType="Long" resultMap="GwOrganizationResult">
+        <include refid="selectGwOrganizationVo"/>
+        where o_id = #{oId}
+    </select>
+        
+    <insert id="insertGwOrganization" parameterType="GwOrganization" useGeneratedKeys="true" keyProperty="oId">
+        insert into gw_organization
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="oName != null">o_name,</if>
+            <if test="code != null">code,</if>
+            <if test="isInactive != null">is_inactive,</if>
+            <if test="province != null">province,</if>
+            <if test="city != null">city,</if>
+            <if test="district != null">district,</if>
+            <if test="abbreviation != null">abbreviation,</if>
+            <if test="institutionCode != null">institution_code,</if>
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="sort != null">sort,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="lcId != null">lc_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="oName != null">#{oName},</if>
+            <if test="code != null">#{code},</if>
+            <if test="isInactive != null">#{isInactive},</if>
+            <if test="province != null">#{province},</if>
+            <if test="city != null">#{city},</if>
+            <if test="district != null">#{district},</if>
+            <if test="abbreviation != null">#{abbreviation},</if>
+            <if test="institutionCode != null">#{institutionCode},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="lcId != null">#{lcId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGwOrganization" parameterType="GwOrganization">
+        update gw_organization
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="oName != null">o_name = #{oName},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="isInactive != null">is_inactive = #{isInactive},</if>
+            <if test="province != null">province = #{province},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="district != null">district = #{district},</if>
+            <if test="abbreviation != null">abbreviation = #{abbreviation},</if>
+            <if test="institutionCode != null">institution_code = #{institutionCode},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="lcId != null">lc_id = #{lcId},</if>
+        </trim>
+        where o_id = #{oId}
+    </update>
+
+    <delete id="deleteGwOrganizationByOId" parameterType="Long">
+        delete from gw_organization where o_id = #{oId}
+    </delete>
+
+    <delete id="deleteGwOrganizationByOIds" parameterType="String">
+        delete from gw_organization where o_id in 
+        <foreach item="oId" collection="array" open="(" separator="," close=")">
+            #{oId}
+        </foreach>
+    </delete>
+
+</mapper>
