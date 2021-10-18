@@ -69,7 +69,7 @@
                     <i class="fa fa-download"></i> 导出
                 </a>
 
-                <a class="btn btn-success" id="syncOrganization" shiro:hasPermission="gw:organization:syncOrganization">
+                <a class="btn btn-success" id="syncData" shiro:hasPermission="gw:organization:syncData">
                     <i class="fa fa-plus"></i> 获取接口数据
                 </a>
 
@@ -86,8 +86,8 @@
         var prefix = ctx + "gw/organization";
 
         $(function() {
-            $("#syncOrganization").click(function(){
-                var _url = prefix+ "/syncOrganization";
+            $("#syncData").click(function(){
+                var _url = prefix+ "/syncData";
                 var data ={"":""};
                 $.operate.post(_url,data,function(result) {
                     $.table.refresh();

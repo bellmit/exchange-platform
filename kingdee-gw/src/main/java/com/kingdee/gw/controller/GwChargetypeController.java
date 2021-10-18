@@ -1,6 +1,13 @@
 package com.kingdee.gw.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.kingdee.gw.domain.GwOrganization;
+import com.kingdee.gw.util.LinkedcareUtil;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -122,5 +129,63 @@ public class GwChargetypeController extends BaseController
     public AjaxResult remove(String ids)
     {
         return toAjax(gwChargetypeService.deleteGwChargetypeByCtIds(ids));
+    }
+
+    /**
+     * 组织架构同步
+     */
+    @ApiOperation("组织架构同步")
+    @RequiresPermissions("gw:chargetype:syncData")
+    @Log(title = "组织架构", businessType = BusinessType.OTHER)
+    @PostMapping("/syncData")
+    @ResponseBody
+    public AjaxResult syncData(GwChargetype gwChargetype)
+    {
+
+        JSONArray datas = LinkedcareUtil.syncChargeType();
+        if(datas !=null && datas.size() >0)
+        {
+            List <GwChargetype> os = new ArrayList<GwChargetype>();
+            List <GwChargetype> ous = new ArrayList<GwChargetype>();
+            for (int j = 0 ; j < datas.size() ; j++) {
+                JSONObject data = datas.getJSONObject(j);
+                GwChargetype o = new GwChargetype();
+                o.setLcId(data.getString("id"));
+                if (gwChargetypeService.selectGwChargetypeList(o).size() ==0 ){
+                    // 不存在 新增
+                    o.setCtName(data.getString("itemName"));
+                    o.setOfficeId(data.getString("officeId"));
+                    o.setCode(data.getString("code"));
+                    o.setNotes(data.getString("notes"));
+                    o.setItemType(data.getString("itemType"));
+                    o.setStatus(1L);
+                    o.setSort(data.getLong("id"));
+                    os.add(o);
+                }else {
+                    //存在  判断名称是否一致
+
+                    GwChargetype ou = gwChargetypeService.selectGwChargetypeList(o).get(0);
+                    if(ou.getCtName().equals(data.getString("itemName"))){
+                        ou.setCtName(data.getString("itemName"));
+
+                    }
+
+                }
+
+            }
+
+            if (os != null && os.size() >0) {
+                for (int k = 0; k < os.size(); k++)
+                    gwChargetypeService.insertGwChargetype(os.get(k));
+            }
+
+            if (ous != null && ous.size() >0) {
+                for (int k = 0; k < ous.size(); k++)
+                    gwChargetypeService.updateGwChargetype(ous.get(k));
+            }
+
+        }
+
+        return  toAjax(1);
     }
 }

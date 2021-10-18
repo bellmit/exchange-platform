@@ -149,14 +149,14 @@ public class GwOrganizationController extends BaseController
 
 
     /**
-     * 导出组织架构列表
+     * 组织架构同步
      */
     @ApiOperation("组织架构同步")
-    @RequiresPermissions("gw:organization:syncOrganization")
+    @RequiresPermissions("gw:organization:syncData")
     @Log(title = "组织架构", businessType = BusinessType.OTHER)
-    @PostMapping("/syncOrganization")
+    @PostMapping("/syncData")
     @ResponseBody
-    public AjaxResult syncOrganization(GwOrganization gwOrganization)
+    public AjaxResult syncData(GwOrganization gwOrganization)
     {
         JSONArray datas = LinkedcareUtil.syncOrganization();
         if(datas !=null && datas.size() >0)
@@ -184,13 +184,10 @@ public class GwOrganizationController extends BaseController
                     os.add(o);
                 }else{
                     GwOrganization uo = gwOrganizationService.selectGwOrganizationList(o).get(0);
-                    boolean flag = false;
                     if (!uo.getoName().equals(data.getString("name"))){
                         uo.setoName(data.getString("name"));
-                        flag = true;
-                    }
-                    if (flag)
                         ous.add(uo);
+                    }
                 }
 
             }

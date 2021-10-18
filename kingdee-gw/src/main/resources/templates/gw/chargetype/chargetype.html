@@ -54,18 +54,23 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="gw:Chargetype:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="gw:chargetype:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="gw:Chargetype:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="gw:chargetype:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="gw:Chargetype:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="gw:chargetype:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="gw:Chargetype:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="gw:chargetype:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
+
+                <a class="btn btn-success" id="syncData" shiro:hasPermission="gw:chargetype:syncData">
+                    <i class="fa fa-plus"></i> 获取接口数据
+                </a>
+
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -74,9 +79,27 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('gw:Chargetype:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('gw:Chargetype:remove')}]];
-        var prefix = ctx + "gw/Chargetype";
+        var editFlag = [[${@permission.hasPermi('gw:chargetype:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('gw:chargetype:remove')}]];
+        var prefix = ctx + "gw/chargetype";
+
+        $(function() {
+            $("#syncData").click(function(){
+                var _url = prefix+ "/syncData";
+                var data ={"":""};
+                $.operate.post(_url,data,function(result) {
+                    $.table.refresh();
+                    if (result.code == web_status.SUCCESS) {
+                        $.table.refresh();
+                    } else if (result.code == web_status.WARNING) {
+                        $.modal.alertWarning(result.msg)
+                    } else {
+                        $.modal.alertError(result.msg);
+                    }
+                });
+
+            });
+        });
 
         $(function() {
             var options = {
